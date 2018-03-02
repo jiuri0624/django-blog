@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main %}
-    <article class="post post-1">
+    <article class="post post-{{ post.pk }}">
         <header class="entry-header">
             <h1 class="entry-title">{{ post.title }}</h1>
             <div class="entry-meta">
@@ -14,7 +14,7 @@
             </div>
         </header>
         <div class="entry-content clearfix">
-                {{ post.body }}
+                {{ post.body|safe }}
         </div>
     </article>
     <section class="comment-area" id="comment-area">
