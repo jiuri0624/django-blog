@@ -25,9 +25,9 @@ STATICFILES_DIRS = [
 SECRET_KEY = 'j8jgi71gsop)*(7ujmu9*ij9tz$&89#97r149r1sd+60b7fdrw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.reedo.cn']
 
 
 # Application definition
