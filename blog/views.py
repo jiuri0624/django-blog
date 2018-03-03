@@ -2,6 +2,7 @@ import markdown
 from django.shortcuts import render, get_object_or_404
 # from django.http import HttpResponse
 from .models import Post, Category
+from comments.forms import CommentForm
 
 # Create your views here.
 
@@ -24,4 +25,6 @@ def category(request, pk):
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.body = markdown.markdown(post.body, extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite', 'markdown.extensions.toc'])
-    return render(request, 'blog/detail.html', {'post':post})
+    form = CommentForm()
+    comment_list = post.comment_set.all().order_by('-created_time')
+    return render(request, 'blog/detail.html', {'post':post, 'form':form, 'comment_list':comment_list})
