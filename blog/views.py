@@ -24,6 +24,7 @@ def category(request, pk):
 
 def detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    post.update_view()
     post.body = markdown.markdown(post.body, extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite', 'markdown.extensions.toc'])
     form = CommentForm()
     comment_list = post.comment_set.all()
