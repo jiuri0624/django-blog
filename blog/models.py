@@ -1,5 +1,7 @@
+import markdown
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.html import strip_tags
 
 # Create your models here.
 
@@ -20,6 +22,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=40)
+    excerpt = models.CharField(max_length=300, blank=True)
     body = models.TextField()
     created_time = models.DateField()
     modified_time = models.DateField()
@@ -37,3 +40,9 @@ class Post(models.Model):
     def update_view(self):
         self.views+=1
         self.save(update_fields=['views'])
+    
+    def save(self, *args, **kwargs):
+        if not self.excerpt:
+            md = markdown.Markdown(extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite'])
+            self.excerpt = strip_tags(md.convert(self.body))[:250] + '...'
+        super(Post, self).save(*args, **kwargs)

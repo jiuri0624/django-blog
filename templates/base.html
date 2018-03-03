@@ -89,17 +89,6 @@
                         {% endfor %}
                     </ul>
                 </div>
-                <div class="widget widget-archives">
-                    <h3 class="widget-title">归档</h3>
-                    {% archives as archives_list %}
-                    <ul>
-                        {% for date in archives_list %}
-                            <li>
-                                <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
 
                 <div class="widget widget-category">
                     <h3 class="widget-title">分类</h3>
@@ -108,6 +97,18 @@
                         {% for category in category_list %}
                             <li>
                                 <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span class="post-count">(13)</span></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="widget widget-archives">
+                    <h3 class="widget-title">归档</h3>
+                    {% archives as archives_list %}
+                    <ul>
+                        {% for date in archives_list %}
+                            <li>
+                                <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月</a>
                             </li>
                         {% endfor %}
                     </ul>
