@@ -63,8 +63,7 @@
         </div>
     </header>
 </div>
-<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
-<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
+
 
 <div class="content-body">
     <div class="container">
@@ -84,7 +83,7 @@
                     <ul>
                         {% for post in recent_post_list %}
                             <li>
-                                <a href="#">{{ post.title }}</a>
+                                <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -172,10 +171,10 @@
     <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
     <nav>
         <ul>
-            <li><a href="index.html">首页</a></li>
-            <li><a href="full-width.html">博客</a></li>
-            <li><a href="about.html">关于</a></li>
-            <li><a href="contact.html">联系</a></li>
+            <li><a href="{% url 'blog:index' %}">首页</a></li>
+            <li><a href="{% url 'blog:index' %}">博客</a></li>
+            <li><a href="{% url 'blog:index' %}">关于</a></li>
+            <li><a href="{% url 'blog:index' %}">联系</a></li>
         </ul>
     </nav>
 </div>
