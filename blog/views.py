@@ -1,7 +1,7 @@
 import markdown
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from .models import Post, Category
+from .models import Post, Category, Tag
 from comments.forms import CommentForm
 
 # Create your views here.
@@ -15,7 +15,7 @@ class IndexView(ListView):
     model = Post
     template_name = 'blog/index.html'
     contex_object_name = 'post_list'
-    paginate_by =1
+    paginate_by =5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -81,6 +81,13 @@ class CategoryView(IndexView):
         return super(CategoryView, self).get_queryset().filter(category=cate)
 
 
+class TagView(IndexView):
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
+        return super(TagView, self).get_queryset().filter(tags=tag)
+
+
+
 # 改用下面类方法实现
 # def detail(request, pk):
 #     post = get_object_or_404(Post, pk=pk)
@@ -101,7 +108,9 @@ class DetailView(DetailView):
     
     def get_object(self, queryset=None):
         post = super(DetailView, self).get_object(queryset=None)
-        post.body = markdown.markdown(post.body, extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite', 'markdown.extensions.toc'])
+        md = markdown.Markdown(extensions=['markdown.extensions.extra', 'markdown.extensions.codehilite', 'markdown.extensions.toc'])
+        post.body = md.convert(post.body)
+        post.toc = md.toc
         return post
     
     def get_context_data(self, **kwargs):
